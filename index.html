@@ -1,0 +1,2661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acc 343 JS Tutorial</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #e0e0e0;
+      background: linear-gradient(135deg, #0a1a1f 0%, #0d1f25 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: #0f252a;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      border: 1px solid rgba(0, 128, 128, 0.2);
+    }
+
+    header {
+      background: linear-gradient(135deg, #004d4d 0%, #006666 100%);
+      color: #ffffff;
+      padding: 40px 30px;
+      text-align: center;
+      border-bottom: 2px solid #9370DB;
+      box-shadow: 0 0 15px rgba(0, 128, 128, 0.4);
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #008080, #9370DB, transparent);
+      animation: headerGlow 3s infinite;
+    }
+
+    @keyframes headerGlow {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(0, 128, 128, 0.7);
+    }
+
+    header p {
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+
+    nav {
+      background: #004d4d;
+      padding: 15px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+      border-bottom: 1px solid rgba(147, 112, 219, 0.3);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: all 0.3s;
+      font-size: 0.9em;
+      border: 1px solid transparent;
+    }
+
+    nav a:hover {
+      background: rgba(147, 112, 219, 0.2);
+      color: #9370DB;
+      box-shadow: 0 0 8px rgba(147, 112, 219, 0.6);
+      border: 1px solid rgba(147, 112, 219, 0.4);
+    }
+
+    .content {
+      padding: 40px 30px;
+    }
+
+    section {
+      margin-bottom: 60px;
+      scroll-margin-top: 80px;
+    }
+
+    h2 {
+      color: #008080;
+      font-size: 2em;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #9370DB;
+      text-shadow: 0 0 5px rgba(0, 128, 128, 0.5);
+    }
+
+    h3 {
+      color: #9370DB;
+      font-size: 1.5em;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      text-shadow: 0 0 3px rgba(147, 112, 219, 0.3);
+    }
+
+    h4 {
+      color: #a78bfa;
+      font-size: 1.2em;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 15px;
+      font-size: 1.05em;
+    }
+
+    .info-box {
+      background: rgba(0, 128, 128, 0.1);
+      border-left: 4px solid #008080;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 128, 128, 0.2);
+    }
+
+    .warning-box {
+      background: rgba(147, 112, 219, 0.1);
+      border-left: 4px solid #9370DB;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(147, 112, 219, 0.2);
+    }
+
+    .success-box {
+      background: rgba(0, 200, 83, 0.1);
+      border-left: 4px solid #00c853;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 200, 83, 0.2);
+    }
+
+    .tip-box {
+      background: rgba(147, 112, 219, 0.15);
+      border-left: 4px solid #9370DB;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(147, 112, 219, 0.25);
+    }
+
+    pre {
+      background: #0a1a1f;
+      color: #e0e0e0;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 20px 0;
+      position: relative;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 128, 128, 0.2);
+    }
+
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+      color: #008080;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #9370DB;
+      color: #ffffff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .copy-btn:hover {
+      background: #a78bfa;
+      box-shadow: 0 0 10px rgba(147, 112, 219, 0.7);
+    }
+
+    .copy-btn:active {
+      background: #7b5fb6;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: #0f252a;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 128, 128, 0.2);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 128, 128, 0.2);
+    }
+
+    .comparison-table th {
+      background: #004d4d;
+      color: #9370DB;
+      font-weight: bold;
+      text-shadow: 0 0 5px rgba(147, 112, 219, 0.5);
+    }
+
+    .comparison-table tr:hover {
+      background: rgba(0, 128, 128, 0.05);
+    }
+
+    .example {
+      background: rgba(147, 112, 219, 0.05);
+      border: 1px solid rgba(147, 112, 219, 0.3);
+      border-radius: 5px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .example-title {
+      font-weight: bold;
+      color: #9370DB;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+      text-shadow: 0 0 5px rgba(147, 112, 219, 0.3);
+    }
+
+    .output {
+      background: #0a1a1f;
+      color: #008080;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      border: 1px solid rgba(0, 128, 128, 0.2);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      header h1 {
+        font-size: 1.8em;
+      }
+    }
+
+    ul,
+    ol {
+      margin-left: 30px;
+      margin-bottom: 15px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    footer {
+      background: #004d4d;
+      color: #e0e0e0;
+      text-align: center;
+      padding: 30px;
+      margin-top: 40px;
+      border-top: 2px solid #9370DB;
+    }
+
+    .btn-run {
+      background: #9370DB;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 10px;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .btn-run:hover {
+      background: #a78bfa;
+      box-shadow: 0 0 10px rgba(147, 112, 219, 0.7);
+    }
+
+    .interactive-demo {
+      background: rgba(0, 128, 128, 0.05);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid rgba(0, 128, 128, 0.2);
+    }
+
+    .part-header {
+      background: linear-gradient(135deg, #004d4d 0%, #006666 100%);
+      color: #9370DB;
+      padding: 20px 30px;
+      margin: 40px -30px 40px -30px;
+      text-align: center;
+      font-size: 1.8em;
+      text-shadow: 0 0 10px rgba(147, 112, 219, 0.7);
+      border-top: 2px solid #9370DB;
+      border-bottom: 2px solid #9370DB;
+      box-shadow: 0 0 15px rgba(0, 128, 128, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>Acc 343 JavaScript Tutorial</h1>
+      <h1>Prof. Qureshi</h1>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#basics">Basics</a></li>
+        <li><a href="#variables">Variables</a></li>
+        <li><a href="#operators">Operators</a></li>
+        <li><a href="#strings">Strings</a></li>
+        <li><a href="#arrays">Arrays</a></li>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#control-flow">Control Flow</a></li>
+        <li><a href="#loops">Loops</a></li>
+        <li><a href="#objects">Objects</a></li>
+        <li><a href="#arrow-functions">Arrow Functions</a></li>
+        <li><a href="#default-params">Default Params</a></li>
+        <li><a href="#rest-spread">Rest & Spread</a></li>
+        <li><a href="#destructuring">Destructuring</a></li>
+        <li><a href="#template-literals">Template Literals</a></li>
+        <li><a href="#simple-fields">Simple Fields</a></li>
+        <li><a href="#declarative">Declarative Funcs</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#getters-setters">Getters/Setters</a></li>
+        <li><a href="#modules">Modules</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+
+      <div class="part-header">PART 1: JavaScript Fundamentals</div>
+
+      <!-- Basics -->
+      <section id="basics">
+        <h2>Getting Started with JavaScript</h2>
+        <p>These notes are based upon YouTube video: <a href="https://youtu.be/PkZNo7MFNFg?si=alwlyOSE2zdh4_qm" target="_blank">https://youtu.be/PkZNo7MFNFg?si=alwlyOSE2zdh4_qm</a>.  You should watch the video up till 2 hours and 43 minutes (equal to one class lecture) to get an overview.  The video will help you understand these concepts better.</p>
+        <p>Make sure to follow along these steps us VS Code; the video mentions other editors, but just stick with VS Code for now.  Copy and paste code to VS Code to see what the code does.  It is better to type the code, but if you don't want to type, at least copy and paste the code and then run it to get a better understanding.</p>
+
+        <h3>What is JavaScript?</h3>
+        <p>JavaScript is a programming language that runs in web browsers. It's perfect for accounting students because
+          it can automate calculations, process data, and create interactive financial tools.</p>
+
+        <div class="info-box">
+          <strong>Why JavaScript for Accounting?</strong>
+          <ul>
+            <li>Automate repetitive financial calculations</li>
+            <li>Build interactive dashboards</li>
+            <li>Validate data entry</li>
+            <li>Process and analyze financial data</li>
+          </ul>
+        </div>
+
+        <h3>Your First Program</h3>
+        <p>Using VS Code, create a new folder called "jstutorial". In that folder, create a file called: "main.js". We
+          could have call it anything. I just decided to call it "main". The .js is the file extension so that our
+          operating system knows that we are dealing with a JavaScript file. Ensure that nodejs is installed; we did
+          that already earlier in the semester. To run the file, you will need to type in the terminal window:
+          <code>node main.js</code> </p>
+        <p>The <code>console.log()</code> function displays output in the browser's console.</p>
+
+        <pre><code>// Your first JavaScript program
+console.log("Hello, World!");
+console.log("Total Revenue: $50,000");</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+
+        <h3>Comments</h3>
+        <p>Comments help document your code. They don't affect how the program runs.</p>
+
+        <pre><code>// This is a single-line comment
+
+/* 
+   This is a multi-line comment
+   Use for longer explanations
+*/
+
+var revenue = 100000;  // Inline comment</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      </section>
+
+      <!-- Variables -->
+      <section id="variables">
+        <h2>Variables & Data Types</h2>
+
+        <h3>Understanding Variables</h3>
+        <p>Variables are like labeled boxes that store data. Think of them as account names in a ledger.</p>
+
+        <h3>Three Ways to Declare Variables</h3>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Keyword</th>
+              <th>When to Use</th>
+              <th>Can Change?</th>
+              <th>Scope</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>var</code></td>
+              <td>Old style (avoid in new code)</td>
+              <td>Yes</td>
+              <td>Function</td>
+            </tr>
+            <tr>
+              <td><code>let</code></td>
+              <td>Values that will change</td>
+              <td>Yes</td>
+              <td>Block</td>
+            </tr>
+            <tr>
+              <td><code>const</code></td>
+              <td>Fixed values (constants)</td>
+              <td>No</td>
+              <td>Block</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <pre><code>// var - old way
+var accountBalance = 5000;
+
+// let - for values that change
+let monthlyRevenue = 10000;
+monthlyRevenue = 12000;  // Can update
+
+// const - for fixed values
+const TAX_RATE = 0.07;
+const COMPANY_NAME = "ABC Corp";
+// TAX_RATE = 0.08;  // ERROR - can't change</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Seven Data Types</h3>
+
+        <pre><code>// 1. undefined - not yet assigned
+let accountType;
+console.log(accountType);  // undefined
+
+// 2. null - intentionally empty
+let closedAccount = null;
+
+// 3. boolean - true/false
+let isActive = true;
+let hasOverdraft = false;
+
+// 4. string - text data
+let customerName = "John Smith";
+let accountNumber = "ACC-001";
+
+// 5. number - numeric values
+let balance = 5000;
+let interestRate = 0.05;
+
+// 6. symbol - unique identifiers (advanced)
+
+// 7. object - complex data structures
+let customer = {
+    name: "John",
+    balance: 5000
+};</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Accounting Example: Customer Account</div>
+          <pre><code>const ACCOUNT_NUMBER = "CHK-12345";
+let accountBalance = 5000.00;
+let accountHolder = "Jane Doe";
+let isActive = true;
+
+console.log("Account: " + ACCOUNT_NUMBER);
+console.log("Balance: $" + accountBalance);
+console.log("Active: " + isActive);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+          <div class="output">Account: CHK-12345
+            Balance: $5000
+            Active: true</div>
+        </div>
+
+      </section>
+
+      <!-- Operators -->
+      <section id="operators">
+        <h2>Operators</h2>
+
+        <h3>Arithmetic Operators</h3>
+
+        <pre><code>// Addition
+let revenue = 50000;
+let additionalSales = 10000;
+let totalRevenue = revenue + additionalSales;  // 60000
+
+// Subtraction
+let expenses = 30000;
+let profit = revenue - expenses;  // 20000
+
+// Multiplication
+let hourlyRate = 25;
+let hoursWorked = 40;
+let grossPay = hourlyRate * hoursWorked;  // 1000
+
+// Division
+let totalCost = 1000;
+let quantity = 4;
+let unitCost = totalCost / quantity;  // 250
+
+// Remainder (Modulus)
+let invoiceNum = 100;
+let remainder = invoiceNum % 3;  // 1</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Compound Assignment Operators</h3>
+
+        <pre><code>let balance = 1000;
+
+// Addition assignment
+balance += 500;   // Same as: balance = balance + 500
+console.log(balance);  // 1500
+
+// Subtraction assignment
+balance -= 200;   // Same as: balance = balance - 200
+console.log(balance);  // 1300
+
+// Multiplication assignment
+let price = 100;
+price *= 1.1;     // Increase by 10%
+console.log(price);  // 110
+
+// Division assignment
+let cost = 1000;
+cost /= 4;        // Divide by 4
+console.log(cost);  // 250</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Increment and Decrement</h3>
+
+        <pre><code>// Increment (add 1)
+let transactionCount = 0;
+transactionCount++;  // Now 1
+transactionCount++;  // Now 2
+
+// Decrement (subtract 1)
+let itemsInStock = 100;
+itemsInStock--;  // Now 99
+itemsInStock--;  // Now 98</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Practical Example: Monthly Tracking</div>
+          <pre><code>let monthlyRevenue = 0;
+
+// Week 1
+monthlyRevenue += 5000;
+console.log("Week 1: $" + monthlyRevenue);
+
+// Week 2
+monthlyRevenue += 7500;
+console.log("Week 2: $" + monthlyRevenue);
+
+// Week 3
+monthlyRevenue += 6200;
+console.log("Week 3: $" + monthlyRevenue);
+
+// Week 4
+monthlyRevenue += 8100;
+console.log("Week 4: $" + monthlyRevenue);
+
+// Calculate average
+let average = monthlyRevenue / 4;
+console.log("Average: $" + average);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+          <div class="output">Week 1: $5000
+            Week 2: $12500
+            Week 3: $18700
+            Week 4: $26800
+            Average: $6700</div>
+        </div>
+
+      </section>
+
+      <!-- Strings -->
+      <section id="strings">
+        <h2>Strings</h2>
+
+        <h3>Creating Strings</h3>
+
+        <pre><code>// Three ways to create strings
+let accountName = "Cash";
+let description = 'Office Supplies';
+let code = `ACC-001`;  // Template literal (backticks)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Escape Characters</h3>
+
+        <pre><code>// Escaping quotes
+let message = "The account is \"Active\"";
+let msg2 = 'It\'s working';
+
+// Common escape sequences
+let report = "Name\tBalance\tStatus";  // \t = tab
+let multiLine = "Line 1\nLine 2";      // \n = new line
+let path = "C:\\Users\\Docs";          // \\ = backslash</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>String Concatenation</h3>
+
+        <pre><code>// Using + operator
+let firstName = "John";
+let lastName = "Smith";
+let fullName = firstName + " " + lastName;
+console.log(fullName);  // "John Smith"
+
+// Using += operator
+let report = "Financial Summary";
+report += "\n";
+report += "Revenue: $50,000";
+console.log(report);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>String Properties and Methods</h3>
+
+        <pre><code>// Length property
+let accountCode = "ACC-12345";
+console.log(accountCode.length);  // 9
+
+// Accessing characters (zero-based indexing)
+let code = "ABC";
+console.log(code[0]);  // "A"
+console.log(code[1]);  // "B"
+console.log(code[2]);  // "C"
+
+// Last character
+let lastChar = code[code.length - 1];  // "C"</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="warning-box">
+          <strong>String Immutability:</strong> You cannot change individual characters in a string.
+          <pre><code>let account = "CHK";
+account[0] = "S";  // Doesn't work!
+console.log(account);  // Still "CHK"
+
+// Must create new string
+account = "SAV";  // This works</code></pre>
+        </div>
+
+      </section>
+
+      <!-- Arrays -->
+      <section id="arrays">
+        <h2>Arrays</h2>
+
+        <h3>What is an Array?</h3>
+        <p>An array is a list of values stored in a single variable. Think of it as a column in a spreadsheet.</p>
+
+        <pre><code>// Creating arrays
+let balances = [1000, 2500, 750, 3200];
+let accounts = ["Cash", "AR", "Inventory", "Equipment"];
+
+// Mixed types (possible but not recommended)
+let mixed = ["Cash", 1000, true];
+
+// Empty array
+let transactions = [];</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Accessing Array Elements</h3>
+
+        <pre><code>let accounts = ["Cash", "AR", "Inventory", "Equipment"];
+//              [0]     [1]    [2]          [3]
+
+console.log(accounts[0]);  // "Cash"
+console.log(accounts[1]);  // "AR"
+console.log(accounts[2]);  // "Inventory"
+console.log(accounts[3]);  // "Equipment"</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Nested Arrays</h3>
+
+        <pre><code>// Multi-dimensional array (like a table)
+let accountData = [
+    ["Cash", 5000],
+    ["AR", 3000],
+    ["Inventory", 2000]
+];
+
+console.log(accountData[0]);      // ["Cash", 5000]
+console.log(accountData[0][0]);   // "Cash"
+console.log(accountData[0][1]);   // 5000
+console.log(accountData[1][1]);   // 3000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Array Methods</h3>
+
+        <pre><code>let transactions = [100, 200, 300];
+
+// push() - add to end
+transactions.push(400);
+console.log(transactions);  // [100, 200, 300, 400]
+
+// pop() - remove from end
+let removed = transactions.pop();
+console.log(removed);        // 400
+console.log(transactions);   // [100, 200, 300]
+
+// unshift() - add to beginning
+transactions.unshift(50);
+console.log(transactions);   // [50, 100, 200, 300]
+
+// shift() - remove from beginning
+let first = transactions.shift();
+console.log(first);          // 50
+console.log(transactions);   // [100, 200, 300]
+
+// length property
+console.log(transactions.length);  // 3</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Practical Example: Revenue Tracking</div>
+          <pre><code>let monthlyRevenue = [];
+
+// Add monthly data
+monthlyRevenue.push(50000);  // January
+monthlyRevenue.push(55000);  // February
+monthlyRevenue.push(48000);  // March
+
+console.log("Q1 Revenue:", monthlyRevenue);
+console.log("January:", monthlyRevenue[0]);
+
+// Calculate total
+let total = monthlyRevenue[0] + monthlyRevenue[1] + monthlyRevenue[2];
+console.log("Q1 Total: $" + total);
+
+// Calculate average
+let average = total / monthlyRevenue.length;
+console.log("Average: $" + average);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+      </section>
+
+      <!-- Functions -->
+      <section id="functions">
+        <h2>Functions</h2>
+
+        <h3>What is a Function?</h3>
+        <p>A function is a reusable block of code that performs a specific task. Like a formula in Excel that you can
+          use repeatedly.</p>
+
+        <h3>Basic Function Syntax</h3>
+
+        <pre><code>// Defining a function
+function functionName() {
+    // Code to execute
+}
+
+// Calling the function
+functionName();</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Functions with Parameters</h3>
+
+        <pre><code>function calculateNetIncome(revenue, expenses) {
+    let netIncome = revenue - expenses;
+    console.log("Net Income: $" + netIncome);
+}
+
+// Call with different values
+calculateNetIncome(50000, 30000);  // Net Income: $20000
+calculateNetIncome(75000, 45000);  // Net Income: $30000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Return Statement</h3>
+
+        <pre><code>function calculateNetIncome(revenue, expenses) {
+    let netIncome = revenue - expenses;
+    return netIncome;  // Returns value instead of printing
+}
+
+// Store the result
+let q1NetIncome = calculateNetIncome(50000, 30000);
+let q2NetIncome = calculateNetIncome(60000, 35000);
+
+console.log("Q1:", q1NetIncome);  // 20000
+console.log("Q2:", q2NetIncome);  // 25000
+
+// Use in calculations
+let total = q1NetIncome + q2NetIncome;
+console.log("Total:", total);  // 45000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Practical Functions for Accounting</div>
+          <pre><code>// Calculate sales tax
+function calculateSalesTax(amount, taxRate) {
+    return amount * taxRate;
+}
+
+let tax = calculateSalesTax(100, 0.07);
+console.log("Tax: $" + tax);  // $7
+
+// Calculate simple interest
+function calculateInterest(principal, rate, time) {
+    return principal * rate * time;
+}
+
+let interest = calculateInterest(10000, 0.05, 3);
+console.log("Interest: $" + interest);  // $1500
+
+// Calculate depreciation
+function calculateDepreciation(cost, salvage, life) {
+    return (cost - salvage) / life;
+}
+
+let depreciation = calculateDepreciation(50000, 5000, 5);
+console.log("Annual Depreciation: $" + depreciation);  // $9000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+      </section>
+
+      <!-- Control Flow -->
+      <section id="control-flow">
+        <h2>Control Flow - Making Decisions</h2>
+
+        <h3>Comparison Operators</h3>
+
+        <pre><code>// Equality operators
+5 == 5       // true
+5 == "5"     // true (converts types)
+5 === 5      // true
+5 === "5"    // false (strict - no conversion)
+5 != 3       // true
+5 !== "5"    // true (different types)
+
+// Relational operators
+let balance = 5000;
+balance > 1000   // true
+balance < 1000   // false
+balance >= 5000  // true
+balance <= 5000  // true</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="tip-box">
+          <strong>Best Practice:</strong> Always use <code>===</code> and <code>!==</code> (strict equality) in
+          accounting to avoid unexpected type conversions.
+        </div>
+
+        <h3>If Statements</h3>
+
+        <pre><code>let balance = 500;
+let minimumBalance = 1000;
+
+if (balance < minimumBalance) {
+    console.log("Warning: Below minimum balance!");
+}
+
+// If...else
+if (balance < minimumBalance) {
+    console.log("Below minimum");
+} else {
+    console.log("Account healthy");
+}
+
+// If...else if...else
+let creditScore = 720;
+
+if (creditScore >= 750) {
+    console.log("Excellent - 3% APR");
+} else if (creditScore >= 700) {
+    console.log("Good - 5% APR");
+} else if (creditScore >= 650) {
+    console.log("Fair - 8% APR");
+} else {
+    console.log("Requires review");
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Logical Operators</h3>
+
+        <pre><code>// AND (&&) - both must be true
+let balance = 5000;
+let accountAge = 2;
+
+if (balance >= 1000 && accountAge >= 1) {
+    console.log("Eligible for premium");
+}
+
+// OR (||) - at least one must be true
+let hasDirectDeposit = true;
+
+if (balance >= 1000 || hasDirectDeposit) {
+    console.log("Fee waived");
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Switch Statements</h3>
+
+        <pre><code>let accountType = "savings";
+
+switch(accountType) {
+    case "checking":
+        console.log("No monthly fee");
+        break;
+    case "savings":
+        console.log("0.5% APY");
+        break;
+    case "money market":
+        console.log("1.5% APY, $10,000 minimum");
+        break;
+    default:
+        console.log("Unknown account type");
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Ternary Operator</h3>
+
+        <pre><code>// Shorthand if...else
+let balance = 1500;
+let status = balance >= 1000 ? "Good" : "Below Minimum";
+console.log(status);  // "Good"
+
+// Function example
+function calculateFee(balance, hasDD) {
+    return (balance >= 1000 || hasDD) ? 0 : 10;
+}
+
+console.log(calculateFee(500, false));   // $10
+console.log(calculateFee(1200, false));  // $0</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      </section>
+
+      <!-- Loops -->
+      <section id="loops">
+        <h2>Loops - Repeating Actions</h2>
+
+        <h3>While Loops</h3>
+
+        <pre><code>let balance = 1000;
+let month = 1;
+let interestRate = 0.005;  // 0.5% monthly
+
+console.log("Starting: $" + balance);
+
+while (month <= 12) {
+    let interest = balance * interestRate;
+    balance += interest;
+    console.log("Month " + month + ": $" + balance.toFixed(2));
+    month++;
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>For Loops</h3>
+
+        <pre><code>// Basic for loop
+for (let i = 0; i < 5; i++) {
+    console.log("Count: " + i);
+}
+
+// Processing arrays
+let monthlyRevenue = [50000, 55000, 48000, 62000];
+let total = 0;
+
+for (let i = 0; i < monthlyRevenue.length; i++) {
+    console.log("Month " + (i + 1) + ": $" + monthlyRevenue[i]);
+    total += monthlyRevenue[i];
+}
+
+console.log("Total: $" + total);
+console.log("Average: $" + (total / monthlyRevenue.length));</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Nested Loops</h3>
+
+        <pre><code>// Process quarterly data
+let quarterlyData = [
+    [10000, 12000, 11000],  // Q1
+    [13000, 14000, 15000],  // Q2
+    [16000, 14000, 17000],  // Q3
+    [18000, 19000, 20000]   // Q4
+];
+
+for (let q = 0; q < quarterlyData.length; q++) {
+    let qTotal = 0;
+    
+    for (let m = 0; m < quarterlyData[q].length; m++) {
+        qTotal += quarterlyData[q][m];
+    }
+    
+    console.log("Q" + (q + 1) + " Total: $" + qTotal);
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Practical Example: Compound Interest</div>
+          <pre><code>function calculateCompoundInterest(principal, rate, years) {
+    let balance = principal;
+    
+    console.log("Year 0: $" + balance.toFixed(2));
+    
+    for (let year = 1; year <= years; year++) {
+        balance = balance * (1 + rate);
+        console.log("Year " + year + ": $" + balance.toFixed(2));
+    }
+    
+    let totalInterest = balance - principal;
+    return totalInterest;
+}
+
+let interest = calculateCompoundInterest(10000, 0.05, 5);
+console.log("Total Interest: $" + interest.toFixed(2));</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+      </section>
+
+      <!-- Objects -->
+      <section id="objects">
+        <h2>Objects</h2>
+
+        <h3>What is an Object?</h3>
+        <p>An object is a collection of related data stored as key-value pairs. Like a complete customer record.</p>
+
+        <pre><code>let customer = {
+    name: "John Smith",
+    accountNumber: "ACC-001",
+    balance: 5000,
+    accountType: "Checking",
+    active: true
+};</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Accessing Properties</h3>
+
+        <pre><code>// Dot notation
+console.log(customer.name);        // "John Smith"
+console.log(customer.balance);     // 5000
+
+// Bracket notation
+console.log(customer["name"]);     // "John Smith"
+console.log(customer["balance"]);  // 5000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Modifying Objects</h3>
+
+        <pre><code>let account = {
+    balance: 1000,
+    status: "Active"
+};
+
+// Update properties
+account.balance = 1500;
+account["status"] = "Hold";
+
+// Add properties
+account.accountType = "Savings";
+
+// Delete properties
+delete account.status;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Objects with Methods</h3>
+
+        <pre><code>let account = {
+    balance: 1000,
+    
+    deposit: function(amount) {
+        this.balance += amount;
+        console.log("Deposited: $" + amount);
+        console.log("New Balance: $" + this.balance);
+    },
+    
+    withdraw: function(amount) {
+        if (amount <= this.balance) {
+            this.balance -= amount;
+            console.log("Withdrew: $" + amount);
+        } else {
+            console.log("Insufficient funds");
+        }
+    },
+    
+    getBalance: function() {
+        return this.balance;
+    }
+};
+
+account.deposit(500);    // Deposited: $500
+account.withdraw(200);   // Withdrew: $200
+console.log(account.getBalance());  // 1300</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Arrays of Objects</h3>
+
+        <pre><code>let customers = [
+    { id: 1, name: "John Smith", balance: 5000 },
+    { id: 2, name: "Jane Doe", balance: 3500 },
+    { id: 3, name: "Bob Johnson", balance: 7200 }
+];
+
+// Access specific customer
+console.log(customers[0].name);  // "John Smith"
+
+// Loop through all customers
+for (let i = 0; i < customers.length; i++) {
+    console.log(customers[i].name + ": $" + customers[i].balance);
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      </section>
+
+      <div class="part-header">PART 2: ES6 Modern JavaScript Features</div>
+      <p>Topics in this section are advanced. I will selectively cover these or might omit them completely.</p>
+
+      <!-- Arrow Functions -->
+      <section id="arrow-functions">
+        <h2>Arrow Functions</h2>
+
+        <p>Arrow functions provide a shorter, cleaner syntax for writing functions. They're especially useful for quick
+          calculations and callbacks.</p>
+
+        <h3>Traditional vs Arrow Function</h3>
+
+        <div class="grid-2">
+          <div>
+            <h4>Traditional Function</h4>
+            <pre><code>function calculateTax(amount, rate) {
+    return amount * rate;
+}
+
+let tax = calculateTax(1000, 0.07);
+console.log(tax);  // 70</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+          </div>
+          <div>
+            <h4>Arrow Function</h4>
+            <pre><code>const calculateTax = (amount, rate) => {
+    return amount * rate;
+};
+
+let tax = calculateTax(1000, 0.07);
+console.log(tax);  // 70</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+          </div>
+        </div>
+
+        <h3>Arrow Function Variations</h3>
+
+        <pre><code>// Standard arrow function
+const calculateTax = (amount, rate) => {
+    return amount * rate;
+};
+
+// Implicit return (one-liner)
+const calculateTax2 = (amount, rate) => amount * rate;
+
+// No parameters
+const getCompanyName = () => "ABC Corp";
+
+// One parameter (parentheses optional)
+const double = num => num * 2;
+
+// Multiple statements (need curly braces)
+const calculateNetIncome = (revenue, expenses) => {
+    let gross = revenue;
+    let net = gross - expenses;
+    return net;
+};</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Accounting Examples with Arrow Functions</div>
+          <pre><code>// Calculate profit margin
+const profitMargin = (netIncome, revenue) => (netIncome / revenue) * 100;
+
+console.log(profitMargin(15000, 100000));  // 15
+
+// Calculate compound interest
+const compound = (p, r, t) => p * Math.pow(1 + r, t);
+
+console.log(compound(10000, 0.05, 5).toFixed(2));  // 12762.82
+
+// Array processing with arrow functions
+let revenues = [50000, 55000, 48000, 62000];
+
+// Map: apply calculation to each element
+let withTax = revenues.map(rev => rev * 1.07);
+console.log(withTax);  // [53500, 58850, 51360, 66340]
+
+// Filter: keep only values meeting criteria
+let highRevenue = revenues.filter(rev => rev > 50000);
+console.log(highRevenue);  // [55000, 62000]
+
+// Reduce: calculate total
+let total = revenues.reduce((sum, rev) => sum + rev, 0);
+console.log(total);  // 215000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+        <div class="info-box">
+          <strong>When to Use Arrow Functions:</strong>
+          <ul>
+            <li>Array methods (map, filter, reduce)</li>
+            <li>Short, simple calculations</li>
+            <li>Callbacks and event handlers</li>
+            <li>When you want cleaner syntax</li>
+          </ul>
+          <strong>When NOT to use:</strong>
+          <ul>
+            <li>Object methods (use regular functions for proper <code>this</code> binding)</li>
+            <li>When you need dynamic <code>this</code> context</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- Default Parameters -->
+      <section id="default-params">
+        <h2>Default Parameters</h2>
+
+        <p>Default parameters allow you to set default values for function parameters, making functions more flexible
+          and reducing the need for manual checks.</p>
+
+        <h3>Without Default Parameters (Old Way)</h3>
+
+        <pre><code>function calculateInterest(principal, rate, time) {
+    // Manual checks for missing parameters
+    if (rate === undefined) {
+        rate = 0.05;  // Default 5%
+    }
+    if (time === undefined) {
+        time = 1;     // Default 1 year
+    }
+    return principal * rate * time;
+}
+
+console.log(calculateInterest(1000));           // 50
+console.log(calculateInterest(1000, 0.08));     // 80
+console.log(calculateInterest(1000, 0.08, 2));  // 160</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>With Default Parameters (ES6 Way)</h3>
+
+        <pre><code>function calculateInterest(principal, rate = 0.05, time = 1) {
+    return principal * rate * time;
+}
+
+console.log(calculateInterest(1000));           // 50 (uses defaults)
+console.log(calculateInterest(1000, 0.08));     // 80 (uses default time)
+console.log(calculateInterest(1000, 0.08, 2));  // 160 (all specified)</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Accounting Examples with Default Parameters</div>
+          <pre><code>// Invoice calculator with defaults
+const calculateInvoice = (
+    subtotal,
+    taxRate = 0.07,        // Default 7% tax
+    discount = 0,          // Default no discount
+    shippingFee = 10       // Default $10 shipping
+) => {
+    let tax = subtotal * taxRate;
+    let discountAmount = subtotal * discount;
+    let total = subtotal + tax - discountAmount + shippingFee;
+    return total;
+};
+
+console.log(calculateInvoice(100));                    // $117.00
+console.log(calculateInvoice(100, 0.08));             // $118.00
+console.log(calculateInvoice(100, 0.08, 0.1));        // $108.00
+console.log(calculateInvoice(100, 0.08, 0.1, 0));     // $98.00
+
+// Depreciation calculator with defaults
+const depreciation = (
+    cost,
+    salvageValue = 0,
+    usefulLife = 5,
+    method = "straight-line"
+) => {
+    if (method === "straight-line") {
+        return (cost - salvageValue) / usefulLife;
+    }
+    return 0;
+};
+
+console.log(depreciation(50000));              // $10000/year
+console.log(depreciation(50000, 5000));        // $9000/year
+console.log(depreciation(50000, 5000, 10));    // $4500/year</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+        <div class="tip-box">
+          <strong>Best Practices for Default Parameters:</strong>
+          <ul>
+            <li>Place parameters with defaults at the end of the parameter list</li>
+            <li>Use sensible defaults that work in most common cases</li>
+            <li>Document what the defaults are in comments</li>
+            <li>Consider using objects for functions with many optional parameters</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- Rest and Spread -->
+      <section id="rest-spread">
+        <h2>Rest and Spread Operators</h2>
+
+        <p>Both use the <code>...</code> syntax, but they work in opposite ways:</p>
+        <ul>
+          <li><strong>Rest:</strong> Collects multiple items into an array</li>
+          <li><strong>Spread:</strong> Expands an array into individual items</li>
+        </ul>
+
+        <h3>Rest Operator (...)</h3>
+
+        <p>The rest operator collects multiple arguments into a single array parameter.</p>
+
+        <pre><code>// Sum any number of transactions
+function sumTransactions(...amounts) {
+    let total = 0;
+    for (let amount of amounts) {
+        total += amount;
+    }
+    return total;
+}
+
+console.log(sumTransactions(100, 200, 300));           // 600
+console.log(sumTransactions(50, 75, 125, 200));        // 450
+console.log(sumTransactions(1000, 500, 250, 100, 50)); // 1900
+
+// Arrow function version
+const sum = (...nums) => nums.reduce((total, n) => total + n, 0);
+
+console.log(sum(10, 20, 30, 40, 50));  // 150</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Rest with Other Parameters</h3>
+
+        <pre><code>// First parameter separate, rest collected
+function processPayroll(companyName, ...employeeSalaries) {
+    console.log(`Processing payroll for ${companyName}`);
+    let totalPayroll = employeeSalaries.reduce((sum, sal) => sum + sal, 0);
+    console.log(`Total Payroll: $${totalPayroll}`);
+    console.log(`Number of Employees: ${employeeSalaries.length}`);
+    return totalPayroll;
+}
+
+processPayroll("ABC Corp", 50000, 60000, 55000, 70000);
+// Processing payroll for ABC Corp
+// Total Payroll: $235000
+// Number of Employees: 4</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Spread Operator (...)</h3>
+
+        <p>The spread operator expands an array into individual elements.</p>
+
+        <pre><code>// Combining arrays
+let q1Revenue = [50000, 55000, 48000];
+let q2Revenue = [60000, 62000, 58000];
+
+let halfYear = [...q1Revenue, ...q2Revenue];
+console.log(halfYear);  
+// [50000, 55000, 48000, 60000, 62000, 58000]
+
+// Copying arrays
+let originalData = [100, 200, 300];
+let copyData = [...originalData];
+copyData[0] = 999;
+
+console.log(originalData);  // [100, 200, 300] - unchanged
+console.log(copyData);      // [999, 200, 300] - modified
+
+// Using Math functions with arrays
+let expenses = [5000, 3200, 4800, 6100];
+
+let maxExpense = Math.max(...expenses);
+let minExpense = Math.min(...expenses);
+
+console.log("Highest Expense: $" + maxExpense);  // $6100
+console.log("Lowest Expense: $" + minExpense);   // $3200</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Practical Accounting Examples</div>
+          <pre><code>// Calculate portfolio value from multiple accounts
+const calculatePortfolio = (...accountBalances) => {
+    const total = accountBalances.reduce((sum, bal) => sum + bal, 0);
+    const average = total / accountBalances.length;
+    const max = Math.max(...accountBalances);
+    const min = Math.min(...accountBalances);
+    
+    return {
+        total: total,
+        average: average,
+        highest: max,
+        lowest: min,
+        count: accountBalances.length
+    };
+};
+
+let portfolio = calculatePortfolio(5000, 12000, 8500, 15000, 6200);
+console.log(portfolio);
+// {total: 46700, average: 9340, highest: 15000, lowest: 5000, count: 5}
+
+// Combine monthly data from different sources
+let onlineSales = [10000, 12000, 11500];
+let storeSales = [8000, 9500, 8800];
+let wholesaleSales = [15000, 16000, 14500];
+
+let allSales = [...onlineSales, ...storeSales, ...wholesaleSales];
+console.log("All Sales:", allSales);
+
+let totalRevenue = allSales.reduce((sum, sale) => sum + sale, 0);
+console.log("Total Revenue: $" + totalRevenue);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+      </section>
+
+      <!-- Destructuring -->
+      <section id="destructuring">
+        <h2>Destructuring Assignment</h2>
+
+        <p>Destructuring allows you to extract values from arrays or properties from objects into distinct variables
+          using a concise syntax.</p>
+
+        <h3>Array Destructuring</h3>
+
+        <pre><code>// Traditional way
+let balances = [1000, 2000, 3000];
+let checking = balances[0];
+let savings = balances[1];
+let investment = balances[2];
+
+// Destructuring way
+let [checking2, savings2, investment2] = balances;
+
+console.log(checking2);    // 1000
+console.log(savings2);     // 2000
+console.log(investment2);  // 3000
+
+// Skip elements
+let [first, , third] = balances;
+console.log(first);   // 1000
+console.log(third);   // 3000
+
+// With rest operator
+let numbers = [10, 20, 30, 40, 50];
+let [a, b, ...remaining] = numbers;
+
+console.log(a);         // 10
+console.log(b);         // 20
+console.log(remaining); // [30, 40, 50]</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Object Destructuring</h3>
+
+        <pre><code>// Traditional way
+let customer = {
+    name: "John Smith",
+    accountNumber: "ACC-001",
+    balance: 5000,
+    accountType: "Checking"
+};
+
+let name = customer.name;
+let balance = customer.balance;
+
+// Destructuring way
+let { name: customerName, balance: accountBalance } = customer;
+
+console.log(customerName);    // "John Smith"
+console.log(accountBalance);  // 5000
+
+// Shorthand (when variable names match property names)
+let { name, balance, accountType } = customer;
+
+console.log(name);         // "John Smith"
+console.log(balance);      // 5000
+console.log(accountType);  // "Checking"</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Nested Destructuring</h3>
+
+        <pre><code>let company = {
+    name: "ABC Corp",
+    financials: {
+        revenue: 1000000,
+        expenses: 750000,
+        assets: {
+            current: 500000,
+            fixed: 300000
+        }
+    }
+};
+
+// Destructure nested objects
+let {
+    name: companyName,
+    financials: {
+        revenue,
+        expenses,
+        assets: { current: currentAssets }
+    }
+} = company;
+
+console.log(companyName);      // "ABC Corp"
+console.log(revenue);          // 1000000
+console.log(currentAssets);    // 500000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Destructuring in Function Parameters</h3>
+
+        <pre><code>// Instead of passing entire object
+function printInvoice(invoice) {
+    console.log(`Invoice: ${invoice.number}`);
+    console.log(`Customer: ${invoice.customer}`);
+    console.log(`Amount: $${invoice.amount}`);
+}
+
+// Destructure in parameters
+function printInvoice2({ number, customer, amount }) {
+    console.log(`Invoice: ${number}`);
+    console.log(`Customer: ${customer}`);
+    console.log(`Amount: $${amount}`);
+}
+
+let invoice = {
+    number: "INV-001",
+    customer: "John Smith",
+    amount: 1500
+};
+
+printInvoice2(invoice);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Accounting Examples with Destructuring</div>
+          <pre><code>// Financial statement analysis
+const analyzeFinancials = ({ revenue, cogs, operating, taxes }) => {
+    let grossProfit = revenue - cogs;
+    let operatingIncome = grossProfit - operating;
+    let netIncome = operatingIncome - taxes;
+    
+    return {
+        grossProfit,
+        operatingIncome,
+        netIncome,
+        grossMargin: (grossProfit / revenue * 100).toFixed(2) + '%',
+        netMargin: (netIncome / revenue * 100).toFixed(2) + '%'
+    };
+};
+
+let financials = {
+    revenue: 100000,
+    cogs: 60000,
+    operating: 25000,
+    taxes: 3000
+};
+
+let analysis = analyzeFinancials(financials);
+console.log(analysis);
+
+// Process transaction data
+let transactions = [
+    { date: "2024-01-15", type: "deposit", amount: 1000 },
+    { date: "2024-01-16", type: "withdrawal", amount: 200 },
+    { date: "2024-01-17", type: "deposit", amount: 500 }
+];
+
+transactions.forEach(({ date, type, amount }) => {
+    console.log(`${date}: ${type} of $${amount}`);
+});
+
+// Swap values easily
+let assetValue = 100000;
+let liabilityValue = 60000;
+
+[assetValue, liabilityValue] = [liabilityValue, assetValue];
+
+console.log("Assets:", assetValue);        // 60000
+console.log("Liabilities:", liabilityValue); // 100000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+      </section>
+
+      <!-- Template Literals -->
+      <section id="template-literals">
+        <h2>Template Literals</h2>
+
+        <p>Template literals use backticks (`) instead of quotes and provide powerful features for string creation.</p>
+
+        <h3>Basic Template Literals</h3>
+
+        <pre><code>// Old way with concatenation
+let name = "John Smith";
+let balance = 5000;
+let message = "Customer " + name + " has $" + balance;
+
+// Template literal way
+let message2 = `Customer ${name} has $${balance}`;
+
+console.log(message2);  // "Customer John Smith has $5000"</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Multi-line Strings</h3>
+
+        <pre><code>// Old way (messy)
+let report = "Financial Summary\n" +
+             "Revenue: $100,000\n" +
+             "Expenses: $75,000\n" +
+             "Net Income: $25,000";
+
+// Template literal (clean)
+let report2 = `Financial Summary
+Revenue: $100,000
+Expenses: $75,000
+Net Income: $25,000`;
+
+console.log(report2);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Expressions in Template Literals</h3>
+
+        <pre><code>let revenue = 100000;
+let expenses = 75000;
+
+// Can include calculations
+let summary = `
+    Revenue: $${revenue.toLocaleString()}
+    Expenses: $${expenses.toLocaleString()}
+    Net Income: $${(revenue - expenses).toLocaleString()}
+    Profit Margin: ${((revenue - expenses) / revenue * 100).toFixed(2)}%
+`;
+
+console.log(summary);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Practical Accounting Examples</div>
+          <pre><code>// Invoice generator
+const generateInvoice = (invoiceNum, customer, items, taxRate = 0.07) => {
+    let subtotal = items.reduce((sum, item) => sum + item.amount, 0);
+    let tax = subtotal * taxRate;
+    let total = subtotal + tax;
+    
+    let itemsList = items.map(item => 
+        `    ${item.description.padEnd(30)} $${item.amount.toFixed(2)}`
+    ).join('\n');
+    
+    return `
+╔════════════════════════════════════════════╗
+║            INVOICE #${invoiceNum.padEnd(20)}║
+╠════════════════════════════════════════════╣
+║ Customer: ${customer.padEnd(31)}║
+║                                            ║
+║ Items:                                     ║
+${itemsList}
+║                                            ║
+╠════════════════════════════════════════════╣
+║ Subtotal:              $${subtotal.toFixed(2).padStart(14)}║
+║ Tax (${(taxRate * 100).toFixed(0)}%):               $${tax.toFixed(2).padStart(14)}║
+║ TOTAL:                 $${total.toFixed(2).padStart(14)}║
+╚════════════════════════════════════════════╝
+    `.trim();
+};
+
+let invoice = generateInvoice(
+    "INV-2024-001",
+    "ABC Company",
+    [
+        { description: "Consulting Services", amount: 1500 },
+        { description: "Software License", amount: 1000 },
+        { description: "Training", amount: 500 }
+    ]
+);
+
+console.log(invoice);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+        <div class="tip-box">
+          <strong>Benefits of Template Literals:</strong>
+          <ul>
+            <li>Cleaner syntax for string concatenation</li>
+            <li>Easy multi-line strings</li>
+            <li>Embed expressions directly</li>
+            <li>No need to escape quotes</li>
+            <li>Better readability</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- Simple Fields -->
+      <section id="simple-fields">
+        <h2>Object Property Shorthand (Simple Fields)</h2>
+
+        <p>ES6 provides a shorthand for creating object properties when the property name matches the variable name.</p>
+
+        <h3>Old Way vs New Way</h3>
+
+        <pre><code>// Traditional object creation
+let name = "John Smith";
+let balance = 5000;
+let accountType = "Checking";
+
+let customer1 = {
+    name: name,
+    balance: balance,
+    accountType: accountType
+};
+
+// ES6 Shorthand (Simple Fields)
+let customer2 = {
+    name,
+    balance,
+    accountType
+};
+
+console.log(customer2);
+// { name: "John Smith", balance: 5000, accountType: "Checking" }</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Creating Objects from Function Parameters</h3>
+
+        <pre><code>// Traditional way
+function createAccount(accountNum, holder, balance, type) {
+    return {
+        accountNumber: accountNum,
+        accountHolder: holder,
+        balance: balance,
+        accountType: type,
+        active: true
+    };
+}
+
+// ES6 way with destructuring and shorthand
+const createAccountES6 = (accountNumber, accountHolder, balance, accountType) => ({
+    accountNumber,
+    accountHolder,
+    balance,
+    accountType,
+    active: true
+});
+
+let account = createAccountES6("ACC-001", "Jane Doe", 10000, "Savings");
+console.log(account);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Accounting Examples with Simple Fields</div>
+          <pre><code>// Create financial record
+const createFinancialRecord = (date, revenue, expenses, assets, liabilities) => {
+    let netIncome = revenue - expenses;
+    let equity = assets - liabilities;
+    let profitMargin = (netIncome / revenue * 100).toFixed(2);
+    
+    // Mix of computed values and simple fields
+    return {
+        date,
+        revenue,
+        expenses,
+        assets,
+        liabilities,
+        netIncome,      // computed
+        equity,         // computed
+        profitMargin,   // computed
+        timestamp: new Date()
+    };
+};
+
+let record = createFinancialRecord(
+    "2024-01-31",
+    100000,
+    75000,
+    500000,
+    300000
+);
+
+console.log(record);
+
+// Transaction logger
+const logTransaction = (id, type, amount, category) => {
+    let timestamp = new Date().toISOString();
+    let status = "completed";
+    
+    return {
+        id,
+        type,
+        amount,
+        category,
+        timestamp,
+        status
+    };
+};
+
+let transaction = logTransaction(1001, "expense", 250, "Office Supplies");
+console.log(transaction);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+      </section>
+
+      <!-- Declarative Functions -->
+      <section id="declarative">
+        <h2>Concise Method Syntax (Declarative Functions)</h2>
+
+        <p>ES6 provides a shorter syntax for writing methods (functions inside objects).</p>
+
+        <h3>Old Way vs New Way</h3>
+
+        <pre><code>// Traditional method syntax
+let account1 = {
+    balance: 1000,
+    
+    deposit: function(amount) {
+        this.balance += amount;
+    },
+    
+    withdraw: function(amount) {
+        this.balance -= amount;
+    },
+    
+    getBalance: function() {
+        return this.balance;
+    }
+};
+
+// ES6 Concise Method Syntax
+let account2 = {
+    balance: 1000,
+    
+    deposit(amount) {
+        this.balance += amount;
+    },
+    
+    withdraw(amount) {
+        this.balance -= amount;
+    },
+    
+    getBalance() {
+        return this.balance;
+    }
+};
+
+account2.deposit(500);
+console.log(account2.getBalance());  // 1500</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="example">
+          <div class="example-title">Complete Accounting Object Example</div>
+          <pre><code>const bankAccount = {
+    accountNumber: "ACC-12345",
+    accountHolder: "Sarah Johnson",
+    balance: 5000,
+    transactions: [],
+    
+    deposit(amount) {
+        if (amount <= 0) {
+            console.log("Invalid deposit amount");
+            return false;
+        }
+        this.balance += amount;
+        this.transactions.push({
+            type: "deposit",
+            amount: amount,
+            date: new Date(),
+            newBalance: this.balance
+        });
+        console.log(`Deposited: $${amount}`);
+        return true;
+    },
+    
+    withdraw(amount) {
+        if (amount <= 0) {
+            console.log("Invalid withdrawal amount");
+            return false;
+        }
+        if (amount > this.balance) {
+            console.log("Insufficient funds");
+            return false;
+        }
+        this.balance -= amount;
+        this.transactions.push({
+            type: "withdrawal",
+            amount: amount,
+            date: new Date(),
+            newBalance: this.balance
+        });
+        console.log(`Withdrew: $${amount}`);
+        return true;
+    },
+    
+    getBalance() {
+        return this.balance;
+    },
+    
+    getStatement() {
+        console.log(`\n═══ Account Statement ═══`);
+        console.log(`Account: ${this.accountNumber}`);
+        console.log(`Holder: ${this.accountHolder}`);
+        console.log(`Current Balance: $${this.balance.toFixed(2)}\n`);
+        
+        console.log("Recent Transactions:");
+        this.transactions.forEach((trans, idx) => {
+            let sign = trans.type === "deposit" ? "+" : "-";
+            console.log(`${idx + 1}. ${trans.type.toUpperCase()}: ${sign}$${trans.amount} → $${trans.newBalance.toFixed(2)}`);
+        });
+        console.log(`═════════════════════════\n`);
+    }
+};
+
+// Use the account
+bankAccount.deposit(1000);
+bankAccount.withdraw(500);
+bankAccount.deposit(2000);
+bankAccount.getStatement();</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+        </div>
+
+      </section>
+
+      <!-- Classes -->
+      <section id="classes">
+        <h2>Class Syntax</h2>
+
+        <p>Classes provide a cleaner, more organized way to create objects and handle object-oriented programming in
+          JavaScript.</p>
+
+        <h3>Basic Class Structure</h3>
+
+        <pre><code>// Traditional constructor function (old way)
+function Customer(name, balance) {
+    this.name = name;
+    this.balance = balance;
+}
+
+Customer.prototype.deposit = function(amount) {
+    this.balance += amount;
+};
+
+// ES6 Class (new way)
+class Customer {
+    constructor(name, balance) {
+        this.name = name;
+        this.balance = balance;
+    }
+    
+    deposit(amount) {
+        this.balance += amount;
+    }
+    
+    getBalance() {
+        return this.balance;
+    }
+}
+
+// Create instances
+let customer1 = new Customer("John Smith", 5000);
+customer1.deposit(1000);
+console.log(customer1.getBalance());  // 6000</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Complete Banking Class Example</h3>
+
+        <pre><code>class BankAccount {
+    constructor(accountNumber, accountHolder, initialBalance = 0) {
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = initialBalance;
+        this.transactions = [];
+        this.createdDate = new Date();
+    }
+    
+    deposit(amount) {
+        if (amount <= 0) {
+            throw new Error("Deposit amount must be positive");
+        }
+        this.balance += amount;
+        this.recordTransaction("deposit", amount);
+        return this.balance;
+    }
+    
+    withdraw(amount) {
+        if (amount <= 0) {
+            throw new Error("Withdrawal amount must be positive");
+        }
+        if (amount > this.balance) {
+            throw new Error("Insufficient funds");
+        }
+        this.balance -= amount;
+        this.recordTransaction("withdrawal", amount);
+        return this.balance;
+    }
+    
+    recordTransaction(type, amount) {
+        this.transactions.push({
+            type,
+            amount,
+            date: new Date(),
+            balanceAfter: this.balance
+        });
+    }
+    
+    getBalance() {
+        return this.balance;
+    }
+    
+    getTransactionHistory() {
+        return this.transactions;
+    }
+    
+    printStatement() {
+        console.log(`\n╔════════════════════════════════════════╗`);
+        console.log(`║     Account Statement                  ║`);
+        console.log(`╠════════════════════════════════════════╣`);
+        console.log(`║ Account: ${this.accountNumber.padEnd(28)}║`);
+        console.log(`║ Holder:  ${this.accountHolder.padEnd(28)}║`);
+        console.log(`║ Balance: $${String(this.balance.toFixed(2)).padEnd(27)}║`);
+        console.log(`╠════════════════════════════════════════╣`);
+        console.log(`║ Transactions:                          ║`);
+        
+        this.transactions.forEach(trans => {
+            let type = trans.type.padEnd(12);
+            let amt = `$${trans.amount.toFixed(2)}`.padEnd(10);
+            console.log(`║ ${type} ${amt}              ║`);
+        });
+        
+        console.log(`╚════════════════════════════════════════╝\n`);
+    }
+}
+
+// Create and use account
+let account = new BankAccount("ACC-001", "Alice Johnson", 1000);
+account.deposit(500);
+account.withdraw(200);
+account.deposit(1000);
+account.printStatement();</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Inheritance with Classes</h3>
+
+        <pre><code>// Base class
+class Account {
+    constructor(accountNumber, balance = 0) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+    
+    deposit(amount) {
+        this.balance += amount;
+        return this.balance;
+    }
+    
+    getBalance() {
+        return this.balance;
+    }
+}
+
+// Savings Account (extends Account)
+class SavingsAccount extends Account {
+    constructor(accountNumber, balance, interestRate) {
+        super(accountNumber, balance);  // Call parent constructor
+        this.interestRate = interestRate;
+    }
+    
+    addInterest() {
+        let interest = this.balance * this.interestRate;
+        this.balance += interest;
+        return interest;
+    }
+}
+
+// Checking Account (extends Account)
+class CheckingAccount extends Account {
+    constructor(accountNumber, balance, overdraftLimit) {
+        super(accountNumber, balance);
+        this.overdraftLimit = overdraftLimit;
+    }
+    
+    withdraw(amount) {
+        if (amount > this.balance + this.overdraftLimit) {
+            throw new Error("Exceeds overdraft limit");
+        }
+        this.balance -= amount;
+        return this.balance;
+    }
+}
+
+// Use inherited classes
+let savings = new SavingsAccount("SAV-001", 10000, 0.05);
+let interest = savings.addInterest();
+console.log(`Interest earned: $${interest}`);
+console.log(`New balance: $${savings.getBalance()}`);
+
+let checking = new CheckingAccount("CHK-001", 1000, 500);
+checking.withdraw(1200);  // Uses overdraft
+console.log(`Balance: $${checking.getBalance()}`);  // -200</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      </section>
+
+      <!-- Getters and Setters -->
+      <section id="getters-setters">
+        <h2>Getters and Setters</h2>
+
+        <p>Getters and setters allow you to define methods that are accessed like properties, providing controlled
+          access to object data.</p>
+
+        <h3>Basic Getters and Setters</h3>
+
+        <pre><code>class Temperature {
+    constructor(fahrenheit) {
+        this._fahrenheit = fahrenheit;
+    }
+    
+    // Getter - accessed like a property
+    get celsius() {
+        return (this._fahrenheit - 32) * 5/9;
+    }
+    
+    // Setter - set like a property
+    set celsius(value) {
+        this._fahrenheit = (value * 9/5) + 32;
+    }
+    
+    get fahrenheit() {
+        return this._fahrenheit;
+    }
+    
+    set fahrenheit(value) {
+        this._fahrenheit = value;
+    }
+}
+
+let temp = new Temperature(32);
+console.log(temp.celsius);     // 0 (getter)
+console.log(temp.fahrenheit);  // 32
+
+temp.celsius = 100;            // setter
+console.log(temp.fahrenheit);  // 212</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Accounting Example: Calculated Properties</h3>
+
+        <pre><code>class FinancialStatement {
+    constructor(revenue, cogs, operatingExpenses, taxes) {
+        this._revenue = revenue;
+        this._cogs = cogs;
+        this._operatingExpenses = operatingExpenses;
+        this._taxes = taxes;
+    }
+    
+    // Getters for calculated values
+    get grossProfit() {
+        return this._revenue - this._cogs;
+    }
+    
+    get operatingIncome() {
+        return this.grossProfit - this._operatingExpenses;
+    }
+    
+    get netIncome() {
+        return this.operatingIncome - this._taxes;
+    }
+    
+    get grossMargin() {
+        return (this.grossProfit / this._revenue * 100).toFixed(2) + '%';
+    }
+    
+    get netMargin() {
+        return (this.netIncome / this._revenue * 100).toFixed(2) + '%';
+    }
+    
+    // Setters with validation
+    set revenue(value) {
+        if (value < 0) {
+            throw new Error("Revenue cannot be negative");
+        }
+        this._revenue = value;
+    }
+    
+    get revenue() {
+        return this._revenue;
+    }
+    
+    printStatement() {
+        console.log(`
+╔═══════════════════════════════════════╗
+║      Income Statement                 ║
+╠═══════════════════════════════════════╣
+║ Revenue:           $${String(this._revenue).padStart(17)}║
+║ COGS:              $${String(this._cogs).padStart(17)}║
+║ ────────────────────────────────────  ║
+║ Gross Profit:      $${String(this.grossProfit).padStart(17)}║
+║ Operating Exp:     $${String(this._operatingExpenses).padStart(17)}║
+║ ────────────────────────────────────  ║
+║ Operating Income:  $${String(this.operatingIncome).padStart(17)}║
+║ Taxes:             $${String(this._taxes).padStart(17)}║
+║ ────────────────────────────────────  ║
+║ Net Income:        $${String(this.netIncome).padStart(17)}║
+║                                       ║
+║ Gross Margin:      ${this.grossMargin.padStart(17)} ║
+║ Net Margin:        ${this.netMargin.padStart(17)} ║
+╚═══════════════════════════════════════╝
+        `);
+    }
+}
+
+let statement = new FinancialStatement(100000, 60000, 25000, 3000);
+statement.printStatement();
+
+console.log("Gross Profit:", statement.grossProfit);
+console.log("Net Income:", statement.netIncome);
+console.log("Net Margin:", statement.netMargin);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <div class="tip-box">
+          <strong>When to Use Getters and Setters:</strong>
+          <ul>
+            <li>When you need to compute values on the fly</li>
+            <li>When you want to validate data before setting</li>
+            <li>When you want to make properties read-only</li>
+            <li>When you need to maintain backward compatibility</li>
+            <li>For encapsulation and data protection</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- Modules -->
+      <section id="modules">
+        <h2>Import and Export (Modules)</h2>
+
+        <p>Modules allow you to organize code into separate files and share functionality between them. This is
+          essential for larger accounting applications.</p>
+
+        <div class="warning-box">
+          <strong>Note:</strong> Module imports/exports work in modern JavaScript environments (Node.js, modern browsers
+          with type="module"). The examples below show the syntax, but won't execute in this HTML file directly.
+        </div>
+
+        <h3>Named Exports</h3>
+
+        <pre><code>// ========== financialCalculations.js ==========
+
+// Export individual functions
+export function calculateTax(amount, rate) {
+    return amount * rate;
+}
+
+export function calculateInterest(principal, rate, time) {
+    return principal * rate * time;
+}
+
+export function calculateDepreciation(cost, salvage, life) {
+    return (cost - salvage) / life;
+}
+
+// Export constants
+export const TAX_RATES = {
+    federal: 0.21,
+    state: 0.07,
+    sales: 0.08
+};
+
+export const ACCOUNTING_PERIODS = {
+    monthly: 12,
+    quarterly: 4,
+    annually: 1
+};</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <pre><code>// ========== Alternative: Export at end of file ==========
+
+function calculateTax(amount, rate) {
+    return amount * rate;
+}
+
+function calculateInterest(principal, rate, time) {
+    return principal * rate * time;
+}
+
+const TAX_RATES = {
+    federal: 0.21,
+    state: 0.07
+};
+
+// Export all at once
+export { calculateTax, calculateInterest, TAX_RATES };</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Named Imports</h3>
+
+        <pre><code>// ========== app.js ==========
+
+// Import specific functions
+import { calculateTax, calculateInterest, TAX_RATES } from './financialCalculations.js';
+
+let tax = calculateTax(10000, TAX_RATES.federal);
+console.log("Tax:", tax);
+
+// Import with alias
+import { calculateTax as calcTax } from './financialCalculations.js';
+
+let tax2 = calcTax(5000, 0.07);
+
+// Import everything
+import * as FinCalc from './financialCalculations.js';
+
+let interest = FinCalc.calculateInterest(10000, 0.05, 3);
+console.log("Interest:", interest);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Default Exports</h3>
+
+        <pre><code>// ========== Account.js ==========
+
+// Default export - one per file
+export default class Account {
+    constructor(accountNumber, balance) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+    
+    deposit(amount) {
+        this.balance += amount;
+        return this.balance;
+    }
+    
+    withdraw(amount) {
+        this.balance -= amount;
+        return this.balance;
+    }
+    
+    getBalance() {
+        return this.balance;
+    }
+}
+
+// Can also export additional named exports
+export const ACCOUNT_TYPES = {
+    checking: 'CHECKING',
+    savings: 'SAVINGS',
+    investment: 'INVESTMENT'
+};</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <pre><code>// ========== app.js ==========
+
+// Import default export (no curly braces)
+import Account from './Account.js';
+
+// Import both default and named
+import Account, { ACCOUNT_TYPES } from './Account.js';
+
+let myAccount = new Account("ACC-001", 1000);
+myAccount.deposit(500);
+console.log(myAccount.getBalance());</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Module Best Practices</h3>
+
+        <div class="info-box">
+          <strong>Organizing Your Code with Modules:</strong>
+          <ul>
+            <li><strong>One responsibility per module:</strong> Each file should have a clear purpose</li>
+            <li><strong>Constants in separate files:</strong> Keep tax rates, business rules in constants.js</li>
+            <li><strong>Utilities separate:</strong> General calculations in utils.js</li>
+            <li><strong>Classes in their own files:</strong> One class per file usually</li>
+            <li><strong>Clear naming:</strong> File names should match what they export</li>
+          </ul>
+        </div>
+
+        <h3>Example File Structure for Accounting App</h3>
+
+        <pre><code>// Project Structure:
+accounting-app/
+├── src/
+│   ├── constants/
+│   │   ├── taxRates.js
+│   │   ├── accountTypes.js
+│   │   └── periods.js
+│   │
+│   ├── models/
+│   │   ├── Account.js
+│   │   ├── Customer.js
+│   │   ├── Invoice.js
+│   │   └── Transaction.js
+│   │
+│   ├── calculations/
+│   │   ├── tax.js
+│   │   ├── interest.js
+│   │   ├── depreciation.js
+│   │   └── ratios.js
+│   │
+│   ├── reports/
+│   │   ├── IncomeStatement.js
+│   │   ├── BalanceSheet.js
+│   │   └── CashFlow.js
+│   │
+│   ├── utils/
+│   │   ├── formatters.js
+│   │   ├── validators.js
+│   │   └── helpers.js
+│   │
+│   └── main.js
+│
+└── index.html</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      </section>
+
+      <!-- Practice Exercises -->
+      <section id="exercises">
+        <h2>Practice Exercises</h2>
+
+        <div class="example">
+          <div class="example-title">Exercise 1: Arrow Functions</div>
+          <p>Create arrow functions for the following calculations:</p>
+          <ol>
+            <li>Calculate gross profit: <code>revenue - cost of goods sold</code></li>
+            <li>Calculate operating margin: <code>(operating income / revenue) * 100</code></li>
+            <li>Calculate working capital: <code>current assets - current liabilities</code></li>
+          </ol>
+        </div>
+
+        <div class="example">
+          <div class="example-title">Exercise 2: Destructuring</div>
+          <p>Given this financial data object:</p>
+          <pre><code>const financials = {
+    revenue: 500000,
+    expenses: {
+        cogs: 300000,
+        operating: 120000,
+        interest: 15000
+    },
+    assets: {
+        current: 250000,
+        fixed: 400000
+    }
+};</code></pre>
+          <p>Use destructuring to extract:</p>
+          <ol>
+            <li>Revenue into a variable</li>
+            <li>COGS and operating expenses</li>
+            <li>Current assets</li>
+          </ol>
+        </div>
+
+        <div class="example">
+          <div class="example-title">Exercise 3: Classes</div>
+          <p>Create an <code>Invoice</code> class with:</p>
+          <ul>
+            <li>Constructor accepting customer, items array, and tax rate</li>
+            <li>Getter for subtotal (sum of item amounts)</li>
+            <li>Getter for tax (subtotal * tax rate)</li>
+            <li>Getter for total (subtotal + tax)</li>
+            <li>Method to add an item</li>
+            <li>Method to print the invoice</li>
+          </ul>
+        </div>
+
+        <div class="example">
+          <div class="example-title">Exercise 4: Template Literals</div>
+          <p>Create a function that generates a financial summary report using template literals. Include:</p>
+          <ul>
+            <li>Company name and period</li>
+            <li>Revenue, expenses, and net income</li>
+            <li>Key ratios</li>
+            <li>Formatted as a table with borders</li>
+          </ul>
+        </div>
+
+        <div class="example">
+          <div class="example-title">Exercise 5: Complete Application</div>
+          <p>Build a mini accounting system that:</p>
+          <ol>
+            <li>Uses classes for Account and Transaction</li>
+            <li>Implements getters/setters for validation</li>
+            <li>Uses arrow functions for calculations</li>
+            <li>Uses template literals for reports</li>
+            <li>Uses destructuring when processing data</li>
+            <li>Uses rest/spread operators where appropriate</li>
+          </ol>
+        </div>
+
+      </section>
+
+      <!-- Quick Reference -->
+      <section id="reference">
+        <h2>Quick Reference Guide</h2>
+
+        <h3>Arrow Functions</h3>
+        <pre><code>// Basic
+const func = (param) => expression;
+
+// Multiple parameters
+const func = (a, b) => a + b;
+
+// No parameters
+const func = () => value;
+
+// Block body
+const func = (param) => {
+    // statements
+    return value;
+};</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Default Parameters</h3>
+        <pre><code>function calculate(amount, rate = 0.05, time = 1) {
+    return amount * rate * time;
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Rest Operator</h3>
+        <pre><code>function sum(...numbers) {
+    return numbers.reduce((a, b) => a + b, 0);
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Spread Operator</h3>
+        <pre><code>const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combined = [...arr1, ...arr2];
+
+const max = Math.max(...numbers);</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Destructuring</h3>
+        <pre><code>// Array
+const [a, b, c] = [1, 2, 3];
+
+// Object
+const { name, age } = person;
+
+// Nested
+const { address: { city } } = customer;
+
+// Parameters
+function process({ id, amount }) {
+    // use id and amount
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Template Literals</h3>
+        <pre><code>const name = "John";
+const message = `Hello, ${name}!`;
+
+const multiLine = `
+    Line 1
+    Line 2
+    ${variable}
+`;</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Object Shorthand</h3>
+        <pre><code>const name = "John";
+const age = 30;
+
+// Shorthand
+const person = { name, age };
+
+// Same as
+const person = { name: name, age: age };</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Concise Methods</h3>
+        <pre><code>const obj = {
+    // Concise method
+    method(param) {
+        return param;
+    },
+    
+    // Traditional
+    method2: function(param) {
+        return param;
+    }
+};</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Classes</h3>
+        <pre><code>class ClassName {
+    constructor(param) {
+        this.property = param;
+    }
+    
+    method() {
+        return this.property;
+    }
+    
+    get computed() {
+        return this.property * 2;
+    }
+    
+    set value(val) {
+        this.property = val;
+    }
+}
+
+class Child extends Parent {
+    constructor(param) {
+        super(param);
+    }
+}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+        <h3>Import/Export</h3>
+        <pre><code>// Named exports
+export const value = 42;
+export function func() {}
+
+// Default export
+export default class MyClass {}
+
+// Named imports
+import { value, func } from './module.js';
+
+// Default import
+import MyClass from './module.js';
+
+// Import all
+import * as Module from './module.js';
+
+// Rename
+import { value as val } from './module.js';</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+      </section>
+
+    </div>
+
+    <footer>
+      <p>&copy; 2024 JavaScript for Accounting Students</p>
+      <p>This guide covers fundamental and modern JavaScript concepts for building accounting applications.</p>
+      <p>Practice regularly and build real projects to master these skills!</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // Copy code functionality
+    function copyCode( button ) {
+      const pre = button.parentElement;
+      const code = pre.querySelector( 'code' );
+      const text = code.textContent;
+
+      navigator.clipboard.writeText( text ).then( () => {
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.style.background = '#28a745';
+
+        setTimeout( () => {
+          button.textContent = originalText;
+          button.style.background = '#667eea';
+        }, 2000 );
+      } );
+    }
+
+    // Smooth scrolling for navigation
+    document.querySelectorAll( 'nav a' ).forEach( anchor => {
+      anchor.addEventListener( 'click', function ( e ) {
+        e.preventDefault();
+        const target = document.querySelector( this.getAttribute( 'href' ) );
+        target.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+      } );
+    } );
+  </script>
+</body>
+
+</html>
